@@ -34,7 +34,27 @@ $('#newChat').onclick=$('#newContact').onclick=()=>{$('#contactModal').classList
 let searchTimer;$('#contactSearch').oninput=()=>{clearTimeout(searchTimer);searchTimer=setTimeout(searchPeople,250)};
 async function searchPeople(){const q=$('#contactSearch').value.trim();if(q.length<2){$('#contactResults').innerHTML='';return}const {data,error}=await db.from('profiles').select('id,display_name,username').neq('id',user.id).or('display_name.ilike.%'+q+'%,username.ilike.%'+q+'%').limit(8);$('#contactResults').innerHTML=error?'<div class="error">'+esc(error.message)+'</div>':(data||[]).map(p=>'<button type="button" class="chat" style="width:100%" data-person="'+p.id+'"><span class="avatar">'+esc(initials(p.display_name))+'</span><span class="chatmeta"><b>'+esc(p.display_name)+'</b><span class="preview">@'+esc(p.username||'usuario')+'</span></span><span class="muted">＋</span></button>').join('')||'<p class="status">No encontramos usuarios.</p>'}
 $('#contactResults').onclick=async e=>{const b=e.target.closest('[data-person]');if(!b)return;const other=b.dataset.person;$('#contactError').textContent='Creando conversación…';const {data:c,error}=await db.from('conversations').insert({created_by:user.id}).select('id,title,is_group,created_at,created_by').single();if(error){$('#contactError').textContent=error.message;return}const {error:memberError}=await db.from('conversation_members').insert([{conversation_id:c.id,user_id:user.id},{conversation_id:c.id,user_id:other}]);if(memberError){await db.from('conversations').delete().eq('id',c.id);$('#contactError').textContent=memberError.message;return}$('#contactModal').classList.add('hidden');await loadConversations();openPane(0,c.id);toast('Chat creado')};
-$('#layoutBtn').onclick=()=>{layoutSingle=!layoutSingle;document.querySelectorAll('.pane')[1].style.display=layoutSingle?'none':'';document.querySelector('.panes').style.gridTemplateColumns=layoutSingle?'1fr':'1fr 1fr'};
+const panesEl=$('#panes'),splitBtn=$('#splitBtn');
+function setSplitOpen(open,animate=true){
+  panesEl.classList.remove('is-merging');
+  if(open){
+    panesEl.classList.add('split-open');
+    splitBtn.setAttribute('aria-expanded','true');
+    splitBtn.title='Cerrar segundo panel';
+    splitBtn.setAttribute('aria-label','Cerrar segundo panel');
+  }else{
+    if(animate && panesEl.classList.contains('split-open')){
+      panesEl.classList.add('is-merging');
+      panesEl.classList.remove('split-open');
+      window.setTimeout(()=>panesEl.classList.remove('is-merging'),760);
+    }else panesEl.classList.remove('split-open');
+    splitBtn.setAttribute('aria-expanded','false');
+    splitBtn.title='Abrir segundo panel';
+    splitBtn.setAttribute('aria-label','Abrir segundo panel');
+  }
+}
+splitBtn.onclick=()=>setSplitOpen(!panesEl.classList.contains('split-open'));
+$('#mergeBtn').onclick=()=>setSplitOpen(false);
 $('#back').onclick=()=>$('#shell').classList.remove('chat-open');
 $('#logout').onclick=async()=>{await db.auth.signOut();toast('Sesión cerrada')};
 (async()=>{const {data}=await db.auth.getSession();if(data.session)await start(data.session)})();
