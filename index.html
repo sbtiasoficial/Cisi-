@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#f4f5f8" />
+<title>Cisi — Mensajería</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;color:#20212a;background:#eef0f5;font-synthesis:none;font-optical-sizing:auto}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 12% 0%,#fff 0,#f1f2f7 42%,#e8eaf1 100%);padding:28px;display:grid;place-items:center}
+button,input{font:inherit}button{cursor:pointer}
+.window{width:min(1440px,100%);height:min(900px,calc(100vh - 56px));min-height:620px;background:rgba(255,255,255,.76);border:1px solid rgba(255,255,255,.92);border-radius:22px;box-shadow:0 30px 90px #26304a24,0 3px 12px #26304a0d;overflow:hidden;display:flex;backdrop-filter:blur(30px);animation:arrive .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes arrive{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.sidebar{width:330px;flex-shrink:0;background:rgba(246,247,250,.82);border-right:1px solid #e7e8ed;display:flex;flex-direction:column}
+.traffic{height:52px;display:flex;align-items:center;padding:0 19px;gap:8px}.dot{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px #00000012}.red{background:#ff6259}.yellow{background:#ffbd2e}.green{background:#29c840}
+.brandrow{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 18px}.brand{font:800 25px Manrope;letter-spacing:-1.5px;display:flex;align-items:center;gap:9px}.brandmark{width:31px;height:31px;border-radius:11px;background:linear-gradient(145deg,#8b7bff,#5d56df);display:grid;place-items:center;color:white;font-size:18px;box-shadow:0 5px 12px #7067e84a}
+.iconbtn{border:0;background:transparent;color:#7e8291;border-radius:10px;width:34px;height:34px;font-size:18px;transition:.2s}.iconbtn:hover{background:#e9eaf1;color:#484c5d}
+.search{margin:0 16px 17px;background:#e9eaf0;border:1px solid #e2e3e9;border-radius:11px;display:flex;align-items:center;padding:0 11px;gap:8px;color:#999dab}.search input{border:0;outline:0;background:transparent;width:100%;height:37px;font-size:13px;color:#343746}.sectionlabel{padding:0 20px 9px;color:#999dab;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+.chatlist{overflow:auto;padding:0 9px 16px}.chat{width:100%;border:0;background:transparent;display:flex;gap:11px;text-align:left;padding:11px;border-radius:13px;align-items:center;transition:background .2s,transform .2s}.chat:hover{background:#eceef4}.chat.active{background:#e7e8f8}.avatar{width:43px;height:43px;flex-shrink:0;border-radius:15px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;position:relative;box-shadow:inset 0 0 0 1px #ffffff35}.avatar:after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#36c98b;border:2px solid #f6f7fa;right:-1px;bottom:-1px}.avatar.off:after{display:none}.a1{background:linear-gradient(145deg,#f4a17b,#c45d7c)}.a2{background:linear-gradient(145deg,#8e9bf4,#5c62c8)}.a3{background:linear-gradient(145deg,#73c9b2,#358d83)}.a4{background:linear-gradient(145deg,#d9a5ec,#9861ba)}.a5{background:linear-gradient(145deg,#e8bd70,#bd8742)}.a6{background:linear-gradient(145deg,#79aee9,#4b78b5)}
+.chatinfo{min-width:0;flex:1}.chatname{display:flex;justify-content:space-between;gap:5px;font-size:13px;font-weight:700;color:#292b36}.time{font-size:10px;color:#a1a4b0;font-weight:500;white-space:nowrap}.preview{font-size:11px;color:#9296a4;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.unread{background:#7068e8;color:white;border-radius:20px;font-size:10px;min-width:18px;height:18px;display:grid;place-items:center;margin-top:4px;margin-left:auto}
+.profile{margin-top:auto;border-top:1px solid #e7e8ed;padding:15px 18px;display:flex;align-items:center;gap:10px}.profile .avatar{width:36px;height:36px;border-radius:12px}.profile .avatar:after{display:none}.profile strong{font-size:12px}.profile small{display:block;color:#999dab;font-size:10px;margin-top:3px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;background:rgba(255,255,255,.56)}.topbar{height:70px;border-bottom:1px solid #ececf1;display:flex;align-items:center;padding:0 27px;justify-content:space-between;background:#ffffff68}.person{display:flex;align-items:center;gap:11px}.person .avatar{width:39px;height:39px;border-radius:13px}.person .avatar:after{display:none}.person strong{font-size:13px}.person small{display:block;color:#35ad83;font-size:10px;margin-top:4px}.actions{display:flex;gap:5px}.messages{flex:1;overflow:auto;padding:28px clamp(18px,5vw,76px);display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}.day{text-align:center;color:#a5a8b3;font-size:10px;font-weight:600;margin:3px 0 9px}.msgrow{display:flex;align-items:flex-end;gap:8px;animation:pop .28s ease both}.msgrow.mine{justify-content:flex-end}@keyframes pop{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}.bubble{max-width:min(72%,470px);padding:11px 14px;border-radius:16px;background:#f0f1f6;color:#424553;font-size:12px;line-height:1.55;box-shadow:0 1px 1px #20203008}.mine .bubble{background:linear-gradient(135deg,#7770ed,#655fda);color:white;border-bottom-right-radius:5px;box-shadow:0 5px 14px #716be52b}.msgrow:not(.mine) .bubble{border-bottom-left-radius:5px}.stamp{font-size:9px;color:#a7a9b4;margin:0 4px 2px}.mine .stamp{color:#aaa9bf}.attachment{display:flex;align-items:center;gap:10px;background:#ffffff30;border:1px solid #ffffff42;border-radius:10px;padding:10px;margin-top:8px}.fileicon{width:31px;height:35px;border-radius:7px;background:#ffffff38;display:grid;place-items:center;font-size:16px}.attachment b{display:block;font-size:10px}.attachment small{font-size:9px;opacity:.72}.typing{font-size:10px;color:#a0a3b0;padding-left:4px;display:none}.typing.show{display:block}
+.composerwrap{padding:14px clamp(18px,5vw,76px) 22px}.composer{border:1px solid #e6e7ed;background:#fff;border-radius:15px;box-shadow:0 4px 18px #29304a0b;padding:8px;display:flex;align-items:center;gap:7px;transition:border .2s,box-shadow .2s}.composer:focus-within{border-color:#aaa5f5;box-shadow:0 0 0 3px #8179ed16}.composer input{flex:1;min-width:0;border:0;outline:0;padding:8px 5px;font-size:12px;color:#353746}.composer input::placeholder{color:#b1b3bd}.send{border:0;width:35px;height:35px;border-radius:11px;background:linear-gradient(135deg,#827af1,#625bda);color:#fff;font-size:16px;box-shadow:0 4px 10px #716be54a;transition:transform .2s}.send:hover{transform:translateY(-2px)}.hint{text-align:center;font-size:9px;color:#b4b6c0;margin-top:10px}
+.empty{margin:auto;text-align:center;color:#a2a5b1;font-size:12px}.empty strong{display:block;color:#4a4d5b;font:700 18px Manrope;margin-bottom:7px}
+@media(max-width:760px){body{padding:0;background:#f5f6fa}.window{height:100dvh;min-height:0;border-radius:0;border:0}.sidebar{width:100%;border:0}.main{display:none}.window.mobile-chat .sidebar{display:none}.window.mobile-chat .main{display:flex}.back{display:block!important}.traffic{height:40px}.brandrow{padding-bottom:12px}.messages{padding:20px 16px}.composerwrap{padding:12px 14px 18px}}
+.back{display:none}
+</style>
+</head>
+<body>
+<div class="window" id="app">
+<aside class="sidebar">
+  <div class="traffic"><i class="dot red"></i><i class="dot yellow"></i><i class="dot green"></i></div>
+  <div class="brandrow"><div class="brand"><span class="brandmark">✳</span>cisi<span style="color:#8179ed">.</span></div><button class="iconbtn" id="newChat" title="Nuevo mensaje">＋</button></div>
+  <label class="search"><span>⌕</span><input id="search" placeholder="Buscar conversaciones..." /></label>
+  <div class="sectionlabel">Mensajes recientes</div>
+  <div class="chatlist" id="chatlist">
+    <button class="chat active" data-id="0"><span class="avatar a1">SM</span><span class="chatinfo"><span class="chatname">Sofía Martínez <span class="time">Ahora</span></span><span class="preview">¡Qué bueno! Nos vemos mañana ✨</span></span><span class="unread">2</span></button>
+    <button class="chat" data-id="1"><span class="avatar a2">DL</span><span class="chatinfo"><span class="chatname">Diego López <span class="time">14:32</span></span><span class="preview">Te envié los archivos del proyecto</span></span></button>
+    <button class="chat" data-id="2"><span class="avatar a3">VG</span><span class="chatinfo"><span class="chatname">Valentina García <span class="time">12:08</span></span><span class="preview">jajaja totalmente 😂</span></span></button>
+    <button class="chat" data-id="3"><span class="avatar a4">EC</span><span class="chatinfo"><span class="chatname">Equipo creativo <span class="time">Ayer</span></span><span class="preview">Camila: quedó increíble el diseño</span></span></button>
+    <button class="chat" data-id="4"><span class="avatar a5">MR</span><span class="chatinfo"><span class="chatname">Mateo Rivera <span class="time">Ayer</span></span><span class="preview">Dale, cuenta conmigo 🤝</span></span></button>
+    <button class="chat" data-id="5"><span class="avatar a6 off">AF</span><span class="chatinfo"><span class="chatname">Andrea Flores <span class="time">Lun</span></span><span class="preview">¿Viste la última temporada?</span></span></button>
+  </div>
+  <div class="profile"><span class="avatar a6">TÚ</span><span><strong>Tu espacio</strong><small>Disponible</small></span><button class="iconbtn" style="margin-left:auto">•••</button></div>
+</aside>
+<main class="main">
+  <header class="topbar"><div class="person"><button class="iconbtn back" id="back">‹</button><span class="avatar a1" id="headAvatar">SM</span><span><strong id="headName">Sofía Martínez</strong><small id="headStatus">● En línea</small></span></div><div class="actions"><button class="iconbtn" title="Llamada">⌕</button><button class="iconbtn" title="Videollamada">▣</button><button class="iconbtn" title="Más opciones">•••</button></div></header>
+  <section class="messages" id="messages"><div class="day">HOY · 10:42</div>
+    <div class="msgrow"><div class="bubble">¡Holaaa! ¿Cómo va todo? 😊</div><span class="stamp">10:42</span></div>
+    <div class="msgrow mine"><span class="stamp">10:44</span><div class="bubble">¡Hey! Todo súper bien, ¿y tú?</div></div>
+    <div class="msgrow"><div class="bubble">Muy bien también. Oye, ¿sigue en pie lo de mañana?</div><span class="stamp">10:45</span></div>
+    <div class="msgrow mine"><span class="stamp">10:46</span><div class="bubble">¡Claro que sí! Ya tengo todo preparado ✨</div></div>
+    <div class="msgrow"><div class="bubble">Perfecto!! Te comparto el documento para que le eches un vistazo.<div class="attachment"><span class="fileicon">📄</span><span><b>Ideas para mañana.pdf</b><small>2.4 MB · PDF</small></span></div></div><span class="stamp">10:48</span></div>
+    <div class="msgrow mine"><span class="stamp">10:51</span><div class="bubble">¡Qué bueno! Nos vemos mañana ✨</div></div>
+  </section>
+  <div class="typing" id="typing">Sofía está escribiendo...</div>
+  <footer class="composerwrap"><form class="composer" id="form"><button class="iconbtn" type="button" title="Adjuntar">＋</button><input id="messageInput" autocomplete="off" placeholder="Escribe un mensaje..." /><button class="iconbtn" type="button" title="Emoji">☺</button><button class="send" aria-label="Enviar">↑</button></form><div class="hint">Pulsa Enter para enviar · Tus conversaciones, a tu ritmo.</div></footer>
+</main>
+</div>
+<script>
+const chats=[
+{name:'Sofía Martínez',initials:'SM',avatar:'a1',status:'● En línea',messages:[['in','¡Holaaa! ¿Cómo va todo? 😊','10:42'],['out','¡Hey! Todo súper bien, ¿y tú?','10:44'],['in','Muy bien también. Oye, ¿sigue en pie lo de mañana?','10:45'],['out','¡Claro que sí! Ya tengo todo preparado ✨','10:46'],['in','Perfecto!! Te comparto el documento para que le eches un vistazo.','10:48'],['out','¡Qué bueno! Nos vemos mañana ✨','10:51']]},
+{name:'Diego López',initials:'DL',avatar:'a2',status:'● En línea',messages:[['in','¿Cómo va el proyecto?','14:28'],['out','¡Avanzando súper bien!','14:30'],['in','Te envié los archivos del proyecto','14:32']]},
+{name:'Valentina García',initials:'VG',avatar:'a3',status:'● En línea',messages:[['in','No puedo creer lo que pasó ayer 😂','12:04'],['out','JAJAJA fue demasiado','12:06'],['in','jajaja totalmente 😂','12:08']]},
+{name:'Equipo creativo',initials:'EC',avatar:'a4',status:'4 miembros',messages:[['in','Camila: quedó increíble el diseño','Ayer'],['out','¡Gracias equipo! 🙌','Ayer']]},
+{name:'Mateo Rivera',initials:'MR',avatar:'a5',status:'Visto recientemente',messages:[['in','¿Te apuntas al plan del sábado?','Ayer'],['out','¡De una!','Ayer'],['in','Dale, cuenta conmigo 🤝','Ayer']]},
+{name:'Andrea Flores',initials:'AF',avatar:'a6',status:'Visto hace 2 h',messages:[['in','¿Viste la última temporada?','Lun']]}
+];
+let current=0;const app=document.querySelector('#app'),list=document.querySelector('#chatlist'),messages=document.querySelector('#messages');
+function renderMessages(){messages.innerHTML='<div class="day">HOY · CONVERSACIÓN</div>'+chats[current].messages.map(m=>'<div class="msgrow '+(m[0]==='out'?'mine':'')+'">'+(m[0]==='out'?'<span class="stamp">'+m[2]+'</span>':'')+'<div class="bubble">'+escapeHtml(m[1])+'</div>'+(m[0]==='in'?'<span class="stamp">'+m[2]+'</span>':'')+'</div>').join('');messages.scrollTop=messages.scrollHeight}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function selectChat(i){current=i;document.querySelectorAll('.chat').forEach((b,j)=>b.classList.toggle('active',j===i));document.querySelector('#headName').textContent=chats[i].name;document.querySelector('#headAvatar').textContent=chats[i].initials;document.querySelector('#headAvatar').className='avatar '+chats[i].avatar;document.querySelector('#headStatus').textContent=chats[i].status;app.classList.add('mobile-chat');renderMessages()}
+list.addEventListener('click',e=>{const b=e.target.closest('.chat');if(b)selectChat(+b.dataset.id)});
+document.querySelector('#form').addEventListener('submit',e=>{e.preventDefault();const input=document.querySelector('#messageInput'),v=input.value.trim();if(!v)return;chats[current].messages.push(['out',v,new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})]);input.value='';renderMessages();});
+document.querySelector('#search').addEventListener('input',e=>{const q=e.target.value.toLocaleLowerCase();document.querySelectorAll('.chat').forEach((b,i)=>b.style.display=chats[i].name.toLocaleLowerCase().includes(q)?'flex':'none')});
+document.querySelector('#back').addEventListener('click',()=>app.classList.remove('mobile-chat'));
+document.querySelector('#newChat').addEventListener('click',()=>{document.querySelector('#search').focus();document.querySelector('#search').placeholder='Busca a alguien para escribirle…'});
+renderMessages();
+</script>
+</body></html>
