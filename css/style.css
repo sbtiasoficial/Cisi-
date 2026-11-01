@@ -46,3 +46,8 @@ body{background:linear-gradient(135deg,#f5f7fc 0%,#edf0f8 55%,#e9edf7 100%);colo
 @keyframes liquidPanelOutClose{0%{opacity:1;transform:scaleX(1);filter:blur(0)}35%{opacity:.9;transform:translateX(-8px) scaleX(1.06);filter:blur(2px)}100%{opacity:0;transform:translateX(-22px) scaleX(.18);filter:blur(10px);border-radius:50%}}
 @keyframes liquidMergeSeam{0%{opacity:0;transform:translateX(-50%) scaleY(1)}30%{opacity:1;transform:translateX(-50%) scaleY(1.1) scaleX(2)}100%{opacity:0;transform:translateX(-50%) scaleY(.1) scaleX(.3)}}
 @media(prefers-reduced-motion:reduce){.panes,.panes .pane,.panes::after{animation:none!important;transition:none!important}}
+
+/* Extra controls and dark theme */
+.toolbar>div:last-child{display:flex;align-items:center;gap:4px}.pane-actions{display:flex;gap:2px;margin-left:auto}.pane-actions .icon{font-size:15px}
+body.dark{background:#171b2b;color:#edf0ff}body.dark .shell{background:#20263a;border-color:#343b55}body.dark .sidebar{background:#1b2133;border-color:#343b55}body.dark .toolbar,body.dark .pane,body.dark .panehead{background:#222a40;border-color:#343b55;color:#edf0ff}body.dark .chat:hover,body.dark .chat.active{background:#303957}body.dark .search,body.dark .composebox{background:#171d2e;border-color:#39415e}body.dark .search input,body.dark .composebox input{color:#f1f3ff}body.dark .bubble{background:#303750;color:#eef0ff;border-color:#3a4260}body.dark .mine .bubble{background:linear-gradient(135deg,#6579ef,#485bd0)}body.dark .profile{border-color:#343b55}body.dark .profile b,body.dark .panehead b{color:#edf0ff}body.dark .icon{color:#b8c1e8}body.dark .icon:hover{background:#343d5c}body.dark .empty strong{color:#e3e7fb}
+@media(max-width:620px){.toolbar>div:last-child{gap:1px}.toolbar .icon{width:31px}}
