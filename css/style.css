@@ -51,3 +51,19 @@ body{background:linear-gradient(135deg,#f5f7fc 0%,#edf0f8 55%,#e9edf7 100%);colo
 .toolbar>div:last-child{display:flex;align-items:center;gap:4px}.pane-actions{display:flex;gap:2px;margin-left:auto}.pane-actions .icon{font-size:15px}
 body.dark{background:#171b2b;color:#edf0ff}body.dark .shell{background:#20263a;border-color:#343b55}body.dark .sidebar{background:#1b2133;border-color:#343b55}body.dark .toolbar,body.dark .pane,body.dark .panehead{background:#222a40;border-color:#343b55;color:#edf0ff}body.dark .chat:hover,body.dark .chat.active{background:#303957}body.dark .search,body.dark .composebox{background:#171d2e;border-color:#39415e}body.dark .search input,body.dark .composebox input{color:#f1f3ff}body.dark .bubble{background:#303750;color:#eef0ff;border-color:#3a4260}body.dark .mine .bubble{background:linear-gradient(135deg,#6579ef,#485bd0)}body.dark .profile{border-color:#343b55}body.dark .profile b,body.dark .panehead b{color:#edf0ff}body.dark .icon{color:#b8c1e8}body.dark .icon:hover{background:#343d5c}body.dark .empty strong{color:#e3e7fb}
 @media(max-width:620px){.toolbar>div:last-child{gap:1px}.toolbar .icon{width:31px}}
+
+/* People directory and communities */
+.side-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 12px 15px}
+.side-action{border:1px solid #e5e8f2;background:#fff;color:#59617d;border-radius:10px;padding:9px 7px;font-size:10px;font-weight:700;text-align:left;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.side-action:hover{border-color:#bfc8f5;background:#f0f3ff;color:#4056d5;transform:translateY(-1px)}
+.directory-modal{max-height:min(760px,90vh);display:flex;flex-direction:column}
+.people-results{overflow:auto;min-height:70px;max-height:42vh;margin:8px 0 12px;display:flex;flex-direction:column;gap:5px}
+.person-row{display:flex;align-items:center;gap:10px;border:1px solid #e9ebf2;background:#fff;border-radius:11px;padding:9px;text-align:left;width:100%;color:#34394d}
+.person-row:hover{background:#f3f5ff;border-color:#cbd2fa}
+.person-row .chatmeta{flex:1;min-width:0}
+.person-row b{font-size:11px}.person-row small{display:block;color:#9298aa;font-size:9px;margin-top:3px}
+.person-row input{accent-color:#5267e8}
+.member-hint{font-size:10px;color:#858ba0;margin:2px 0 5px}
+body.dark .side-action,body.dark .person-row{background:#242c43;border-color:#3a4260;color:#e9edff}
+body.dark .person-row small{color:#aab3d1}
+@media(max-width:620px){.side-actions{padding-bottom:10px}.directory-modal{max-height:88vh}}
